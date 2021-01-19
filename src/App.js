@@ -1,16 +1,17 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import ENV from './config';
 import Game from './components/game';
 
 function App() {
   useEffect(() => {
-    document.title = 'Memory Game';
+    document.title = ENV['title'];
   }, []);
 
   return (
     <div>
       <header>
-        <h1>Memory Game</h1>
+        <h1>{ENV['heading']}</h1>
       </header>
       <main>
         <Game />
