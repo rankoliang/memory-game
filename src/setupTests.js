@@ -3,4 +3,30 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+import deepEqual from 'deep-equal';
 jest.mock('./config');
+
+expect.extend({
+  toChange(action, query, { from, to }) {
+    if (deepEqual(query(), from)) {
+      action();
+
+      if (deepEqual(query(), to)) {
+        return {
+          message: () => `Expected final value not to be ${to}`,
+          pass: true,
+        };
+      } else {
+        return {
+          message: () => `Expected final value to be ${to}`,
+          pass: false,
+        };
+      }
+    } else {
+      return {
+        message: () => `Expected initial value to be ${from}`,
+        pass: false,
+      };
+    }
+  },
+});

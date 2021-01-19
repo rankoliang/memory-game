@@ -1,17 +1,6 @@
 import { useState } from 'react';
-import Card from './card';
+import Cards from './cards';
 import Scores from './scores';
-import styled from 'styled-components';
-
-const Cards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(100px, 1fr));
-  grid-gap: 0.5em;
-
-  @media screen and (min-width: 1024px) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-`;
 
 function Game({ cards }) {
   const [score, setScore] = useState(null);
@@ -28,22 +17,25 @@ function Game({ cards }) {
     setScore(null);
   }
 
-  let contents;
+  function incrementScore() {
+    const newScore = score + 1;
+    setScore(newScore);
 
-  if (started) {
-    contents = (
-      <>
-        <button onClick={stopGame}>Reset</button>
-        <Cards>
-          {cards.map(({ img, caption }, index) => (
-            <Card img={img} caption={caption} key={index} />
-          ))}
-        </Cards>
-      </>
-    );
-  } else {
-    contents = <button onClick={startGame}>Start game</button>;
+    if (newScore > highScore) {
+      setHighScore(newScore);
+    }
   }
+
+  const contents = started ? (
+    <>
+      <button onClick={stopGame}>Reset</button>
+      <Cards cards={cards} incrementScore={incrementScore} />
+    </>
+  ) : (
+    <>
+      <button onClick={startGame}>Start game</button>
+    </>
+  );
 
   return (
     <div id="game">

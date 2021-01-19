@@ -27,13 +27,8 @@ const itBehavesLikeANewGame = () => {
 };
 
 describe('The Game', () => {
-  let cards;
-
   beforeEach(() => {
-    cards = [
-      { imgSrc: 'https://example.com/example.png', caption: 'Example image' },
-    ];
-    render(<App cards={cards} />);
+    render(<App />);
   });
 
   itBehavesLikeANewGame();

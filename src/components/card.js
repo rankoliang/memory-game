@@ -39,9 +39,9 @@ const StyledAspectRatio = styled(AspectRatio)`
   }
 `;
 
-function Card({ img: { src, alt }, caption }) {
+function Card({ img: { src, alt }, caption, cardId, onClick }) {
   return (
-    <StyledCard>
+    <StyledCard data-card-id={cardId} onClick={onClick}>
       <StyledAspectRatio ratio={1}>
         <img src={src} alt={alt} />
       </StyledAspectRatio>
