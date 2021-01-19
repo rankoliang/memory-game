@@ -12,6 +12,10 @@ const itBehavesLikeANewGame = () => {
   it('does not display a score', () => {
     expect(screen.queryByText('Score:')).not.toBeInTheDocument();
   });
+
+  it('displays a max score of 0', () => {
+    expect(screen.queryByText('High Score: 0')).toBeInTheDocument();
+  });
 };
 
 describe('The Game', () => {
