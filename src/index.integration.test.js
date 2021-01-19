@@ -58,7 +58,6 @@ describe('The Game', () => {
       const card = ENV['cards'][0];
       const image = screen.getByAltText(card.img.alt);
       expect(image).toBeInTheDocument();
-      expect(image.src).toBe(card.img.src);
       expect(screen.getByText(card.caption)).toBeInTheDocument();
     });
   });

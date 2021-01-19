@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import Card from './card';
 import Scores from './scores';
+import styled from 'styled-components';
+
+const Cards = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  grid-gap: 0.5em;
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+`;
 
 function Game({ cards }) {
   const [score, setScore] = useState(null);
@@ -23,9 +34,11 @@ function Game({ cards }) {
     contents = (
       <>
         <button onClick={stopGame}>Reset</button>
-        {cards.map(({ img, caption }, index) => (
-          <Card img={img} caption={caption} key={index} />
-        ))}
+        <Cards>
+          {cards.map(({ img, caption }, index) => (
+            <Card img={img} caption={caption} key={index} />
+          ))}
+        </Cards>
       </>
     );
   } else {
