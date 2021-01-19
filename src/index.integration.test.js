@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import ENV from './config';
 import App from './App';
 
 const itBehavesLikeANewGame = () => {
@@ -15,6 +16,13 @@ const itBehavesLikeANewGame = () => {
 
   it('displays a max score of 0', () => {
     expect(screen.queryByText('High Score: 0')).toBeInTheDocument();
+  });
+
+  it('renders no cards', () => {
+    const card = ENV['cards'][0];
+    const image = screen.queryByAltText(card.img.alt);
+    expect(image).not.toBeInTheDocument();
+    expect(screen.queryByText(card.caption)).not.toBeInTheDocument();
   });
 };
 
@@ -44,6 +52,14 @@ describe('The Game', () => {
       expect(
         screen.queryByRole('button', { name: 'Start game' })
       ).not.toBeInTheDocument();
+    });
+
+    it('renders at least one card', () => {
+      const card = ENV['cards'][0];
+      const image = screen.getByAltText(card.img.alt);
+      expect(image).toBeInTheDocument();
+      expect(image.src).toBe(card.img.src);
+      expect(screen.getByText(card.caption)).toBeInTheDocument();
     });
   });
 

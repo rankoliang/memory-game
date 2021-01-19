@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import Card from './card';
+import Scores from './scores';
 
-function Game() {
+function Game({ cards }) {
   const [score, setScore] = useState(null);
   const [started, setStarted] = useState(false);
   const [highScore, setHighScore] = useState(0);
@@ -18,7 +20,14 @@ function Game() {
   let contents;
 
   if (started) {
-    contents = <button onClick={stopGame}>Reset</button>;
+    contents = (
+      <>
+        <button onClick={stopGame}>Reset</button>
+        {cards.map(({ img, caption }, index) => (
+          <Card img={img} caption={caption} key={index} />
+        ))}
+      </>
+    );
   } else {
     contents = <button onClick={startGame}>Start game</button>;
   }
@@ -27,15 +36,6 @@ function Game() {
     <div id="game">
       <Scores score={score} highScore={highScore} started={started} />
       {contents}
-    </div>
-  );
-}
-
-function Scores({ score, highScore, started }) {
-  return (
-    <div id="scores">
-      {started && <div id="score">Score: {score}</div>}
-      <div id="high-score">High Score: {highScore}</div>
     </div>
   );
 }

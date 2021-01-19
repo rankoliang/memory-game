@@ -14,7 +14,7 @@ function App() {
         <h1>{ENV['heading']}</h1>
       </header>
       <main>
-        <Game />
+        <Game cards={ENV['cards']} />
       </main>
     </div>
   );

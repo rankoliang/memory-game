@@ -1,7 +1,6 @@
+import ENV from './config';
 import { render, screen } from '@testing-library/react';
 import App from './App';
-import ENV from './config';
-jest.mock('./config');
 
 describe('App', () => {
   beforeEach(() => {
