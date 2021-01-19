@@ -23,38 +23,38 @@ describe('a started game', () => {
     it('increments the score by 1', () => {
       const cardCaption = ENV['cards'][0].caption;
 
-      expect(() => userEvent.click(screen.getByText(cardCaption))).toChange(
-        () => {
-          return {
-            score: getScore('Score'),
-            highScore: getScore('High Score'),
-          };
-        },
-        {
-          from: { score: 0, highScore: 0 },
-          to: { score: 1, highScore: 1 },
-        }
-      );
+      expect(() =>
+        userEvent.click(screen.getByText(cardCaption))
+      ).toChange(() => getScore('Score'), { by: 1 });
+    });
+
+    it('increments the high score by 1', () => {
+      const cardCaption = ENV['cards'][0].caption;
+
+      expect(() =>
+        userEvent.click(screen.getByText(cardCaption))
+      ).toChange(() => getScore('High Score'), { by: 1 });
     });
 
     describe('when another card is picked', () => {
       it('increments the score by 1', () => {
-        const cardCaption = ENV['cards'][0].caption;
+        const cardCaption = ENV['cards'][1].caption;
 
         userEvent.click(screen.getByText(cardCaption));
 
-        expect(() => userEvent.click(screen.getByText(cardCaption))).toChange(
-          () => {
-            return {
-              score: getScore('Score'),
-              highScore: getScore('High Score'),
-            };
-          },
-          {
-            from: { score: 1, highScore: 1 },
-            to: { score: 2, highScore: 2 },
-          }
-        );
+        expect(() =>
+          userEvent.click(screen.getByText(cardCaption))
+        ).toChange(() => getScore('Score'), { by: 1 });
+      });
+
+      it('increments the high score by 1', () => {
+        const cardCaption = ENV['cards'][1].caption;
+
+        userEvent.click(screen.getByText(cardCaption));
+
+        expect(() =>
+          userEvent.click(screen.getByText(cardCaption))
+        ).toChange(() => getScore('High Score'), { by: 1 });
       });
     });
   });

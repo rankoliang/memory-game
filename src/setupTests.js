@@ -7,26 +7,31 @@ import deepEqual from 'deep-equal';
 jest.mock('./config');
 
 expect.extend({
-  toChange(action, query, { from, to }) {
-    if (deepEqual(query(), from)) {
-      action();
+  toChange(action, query, { from, to, by }) {
+    if (by) {
+      from = query();
+      to = query() + by;
+    }
 
-      if (deepEqual(query(), to)) {
-        return {
-          message: () => `Expected final value not to be ${to}`,
-          pass: true,
-        };
-      } else {
-        return {
-          message: () => `Expected final value to be ${to}`,
-          pass: false,
-        };
-      }
-    } else {
+    if (!deepEqual(query(), from)) {
       return {
         message: () => `Expected initial value to be ${from}`,
         pass: false,
       };
     }
+
+    action();
+
+    if (!deepEqual(query(), to)) {
+      return {
+        message: () => `Expected final value to be ${to}`,
+        pass: false,
+      };
+    }
+
+    return {
+      message: () => `Expected final value not to be ${to}`,
+      pass: true,
+    };
   },
 });
