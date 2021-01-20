@@ -10,7 +10,6 @@ expect.extend({
   toChange(action, query, options) {
     if (!options) {
       const initial = query();
-      console.log(initial);
 
       action();
 

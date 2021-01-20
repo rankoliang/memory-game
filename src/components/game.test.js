@@ -65,5 +65,35 @@ describe('a started game', () => {
         ).toChange(() => getScore('High Score'), { by: 1 });
       });
     });
+
+    describe('when the same card is picked', () => {
+      let initialScore;
+      let initialHighScore;
+
+      beforeEach(() => {
+        initialScore = getScore('Score');
+        initialHighScore = getScore('High Score');
+      });
+
+      xit('ends the game', () => {
+        expect(
+          screen.getByText(
+            `You picked ${cardCaptions[0]} already! Your final score is: ${initialScore}`
+          )
+        ).toBeInTheDocument();
+      });
+
+      xit('Does not increment the high score', () => {
+        userEvent.click(screen.getByText(cardCaptions[0]));
+
+        expect(() =>
+          userEvent.click(screen.getByText(cardCaptions[0]))
+        ).not.toChange(() => getScore('High Score'));
+      });
+
+      xit("renders the 'Start Game' button", () => {
+        expect(screen.getByText('button', { name: 'Start Game' }));
+      });
+    });
   });
 });

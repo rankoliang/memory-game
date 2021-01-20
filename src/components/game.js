@@ -6,15 +6,34 @@ function Game({ cards }) {
   const [score, setScore] = useState(null);
   const [started, setStarted] = useState(false);
   const [highScore, setHighScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [selectedCards, setSelectedCards] = useState(null);
 
   function startGame() {
-    setStarted(true);
-    setScore(0);
+    return () => {
+      setStarted(true);
+      setScore(0);
+      setGameOver(false);
+      setSelectedCards(new Set());
+    };
   }
 
-  function stopGame() {
-    setStarted(false);
-    setScore(null);
+  function stopGame(gameOver = false) {
+    return () => {
+      setStarted(false);
+      setScore(null);
+      setGameOver(gameOver);
+      setSelectedCards(new Set());
+    };
+  }
+
+  function selectCard(card) {
+    if (selectedCards.has(card)) {
+      stopGame(true)();
+    } else {
+      incrementScore();
+      setSelectedCards(new Set([...selectedCards, card]));
+    }
   }
 
   function incrementScore() {
@@ -28,18 +47,27 @@ function Game({ cards }) {
 
   const contents = started ? (
     <>
-      <button onClick={stopGame}>Reset</button>
-      <Cards cards={cards} incrementScore={incrementScore} />
+      <button onClick={stopGame(false)}>Reset</button>
+      <Cards
+        cards={cards}
+        incrementScore={incrementScore}
+        selectCard={selectCard}
+      />
     </>
   ) : (
     <>
-      <button onClick={startGame}>Start game</button>
+      <button onClick={startGame()}>Start game</button>
     </>
   );
 
   return (
     <div id="game">
-      <Scores score={score} highScore={highScore} started={started} />
+      <Scores
+        score={score}
+        highScore={highScore}
+        started={started}
+        gameOver={gameOver}
+      />
       {contents}
     </div>
   );

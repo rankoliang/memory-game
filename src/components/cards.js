@@ -11,16 +11,18 @@ const StyledCards = styled.div`
   }
 `;
 
-function Cards({ cards, incrementScore, ...props }) {
+function Cards({ cards, incrementScore, selectCard, ...props }) {
   return (
     <StyledCards {...props}>
-      {cards.map(({ img, caption }, index) => (
+      {cards.map((card, index) => (
         <Card
-          img={img}
-          caption={caption}
+          img={card.img}
+          caption={card.caption}
           cardId={index}
           key={index}
-          onClick={incrementScore}
+          onClick={() => {
+            selectCard(card);
+          }}
         />
       ))}
     </StyledCards>
