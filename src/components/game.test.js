@@ -27,10 +27,16 @@ describe('a started game', () => {
 
   describe('when the user tabs', () => {
     it('focuses each card in order', () => {
-      cardCaptions.forEach((caption) => {
+      // Get all buttons that are not the reset button
+      // https://stackoverflow.com/questions/5030041/need-to-find-a-regular-expression-for-any-word-except-word1-or-word2
+      const cards = screen.getAllByRole('button', {
+        name: /^(?!(?:Reset)$)\w+/,
+      });
+
+      cards.forEach((card) => {
         userEvent.tab();
 
-        expect(document.activeElement).toHaveTextContent(caption);
+        expect(card).toHaveFocus();
       });
     });
   });

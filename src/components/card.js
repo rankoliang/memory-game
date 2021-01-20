@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import 'react-aspect-ratio/aspect-ratio.css';
 import AspectRatio from 'react-aspect-ratio';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 const StyledCard = styled.button`
   background: white;

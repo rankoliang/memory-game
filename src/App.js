@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ENV from './config';
 import Game from './components/game';
 

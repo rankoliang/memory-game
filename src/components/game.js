@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Cards from './cards';
 import Scores from './scores';
+import { shuffle } from '../helpers';
 
 function Game({ cards }) {
   const [score, setScore] = useState(null);
@@ -49,22 +50,7 @@ function Game({ cards }) {
     if (started && selectedCards.size === cards.length) {
       stopGame({ score: cards.length, state: 'win' })();
     }
-  }, [selectedCards]);
-
-  const contents = started ? (
-    <>
-      <button onClick={stopGame(false)}>Reset</button>
-      <Cards
-        cards={cards}
-        incrementScore={incrementScore}
-        selectCard={selectCard}
-      />
-    </>
-  ) : (
-    <>
-      <button onClick={startGame()}>Start game</button>
-    </>
-  );
+  }, [started, selectedCards, cards]);
 
   return (
     <div id="game">
@@ -74,9 +60,21 @@ function Game({ cards }) {
         started={started}
         gameEnd={gameEnd}
       />
-      {contents}
+      {started ? (
+        <>
+          <button onClick={stopGame(false)}>Reset</button>
+          <Cards
+            cards={shuffle(cards)}
+            incrementScore={incrementScore}
+            selectCard={selectCard}
+          />
+        </>
+      ) : (
+        <>
+          <button onClick={startGame()}>Start game</button>
+        </>
+      )}
     </div>
   );
 }
-
 export default Game;
