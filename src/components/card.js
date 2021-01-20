@@ -11,8 +11,17 @@ const StyledCard = styled.button`
   align-items: center;
   width: 100%;
   border: 2px solid black;
-  border-radius: 10px;
+  border-radius: 0.5em;
   padding: 1.5em 1.5em 0 1.5em;
+
+  &:focus {
+    border: 0;
+    outline-color: orange;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 
   figcaption {
     padding: 0.25em 0;
@@ -43,9 +52,15 @@ const StyledAspectRatio = styled(AspectRatio)`
 
 function Card({ img: { src, alt }, caption, cardId, onClick }) {
   return (
-    <StyledCard data-card-id={cardId} onClick={onClick} aria-label={caption}>
+    <StyledCard
+      data-card-id={cardId}
+      onClick={onClick}
+      aria-label={caption}
+      onMouseEnter={(e) => e.target.focus()}
+      onMouseLeave={(e) => e.target.blur()}
+    >
       <StyledAspectRatio ratio={1}>
-        <img src={src} alt={alt} />
+        <img src={src} alt={alt} draggable="false" />
       </StyledAspectRatio>
       <figcaption>{caption}</figcaption>
     </StyledCard>

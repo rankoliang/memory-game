@@ -29,7 +29,7 @@ function Game({ cards }) {
 
   function selectCard(card) {
     if (selectedCards.has(card)) {
-      stopGame(true)();
+      stopGame({ card, score })();
     } else {
       incrementScore();
       setSelectedCards(new Set([...selectedCards, card]));

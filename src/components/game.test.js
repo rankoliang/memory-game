@@ -71,11 +71,15 @@ describe('a started game', () => {
       let initialHighScore;
 
       beforeEach(() => {
+        userEvent.click(screen.getByText(cardCaptions[0]));
+
         initialScore = getScore('Score');
         initialHighScore = getScore('High Score');
       });
 
-      xit('ends the game', () => {
+      it('ends the game', () => {
+        userEvent.click(screen.getByText(cardCaptions[0]));
+
         expect(
           screen.getByText(
             `You picked ${cardCaptions[0]} already! Your final score is: ${initialScore}`
@@ -83,16 +87,16 @@ describe('a started game', () => {
         ).toBeInTheDocument();
       });
 
-      xit('Does not increment the high score', () => {
-        userEvent.click(screen.getByText(cardCaptions[0]));
-
+      it('Does not increment the high score', () => {
         expect(() =>
           userEvent.click(screen.getByText(cardCaptions[0]))
         ).not.toChange(() => getScore('High Score'));
       });
 
-      xit("renders the 'Start Game' button", () => {
-        expect(screen.getByText('button', { name: 'Start Game' }));
+      it("renders the 'Start Game' button", () => {
+        userEvent.click(screen.getByText(cardCaptions[0]));
+
+        expect(screen.getByRole('button', { name: 'Start game' }));
       });
     });
   });

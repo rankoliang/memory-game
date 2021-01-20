@@ -5,7 +5,10 @@ function Scores({ score, highScore, started, gameOver }) {
     scoreElement = <div id="score">Score: {score}</div>;
   } else if (gameOver) {
     scoreElement = (
-      <div id="score">You picked Example 1 already! Your final score is: 0</div>
+      <div id="score">
+        You picked {gameOver.card.caption} already! Your final score is:{' '}
+        {gameOver.score}
+      </div>
     );
   }
 
