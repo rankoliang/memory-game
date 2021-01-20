@@ -4,7 +4,7 @@ import AspectRatio from 'react-aspect-ratio';
 import { useRef } from 'react';
 
 const StyledCard = styled.button`
-  background: white;
+  background: #FFF;
   display: flex;
   flex-direction: column;
   justify-content: center;

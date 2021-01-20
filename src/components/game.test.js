@@ -84,10 +84,12 @@ describe('a started game', () => {
       it('ends the game', () => {
         userEvent.click(screen.getByText(cardCaptions[0]));
 
+        expect(screen.getByText(/Game Over/)).toBeInTheDocument();
         expect(
-          screen.getByText(
-            `You picked ${cardCaptions[0]} already! Your final score is: ${initialScore}`
-          )
+          screen.getByText(`Your final score is ${initialScore}`)
+        ).toBeInTheDocument();
+        expect(
+          screen.getByText(new RegExp(cardCaptions[0]))
         ).toBeInTheDocument();
       });
 

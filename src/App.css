@@ -4,6 +4,7 @@
 
 body,
 html {
+  background-color: #f6f6f6;
   width: 100vw;
   height: 100vh;
   margin: 0;
@@ -12,11 +13,11 @@ html {
 
 .container {
   max-width: 1600px;
-  margin: 0 auto;
+  margin: 1em auto;
 }
 
 @media screen and (max-width: 1600px) {
   .container {
-    margin: 0 2em;
+    margin: 1em;
   }
 }

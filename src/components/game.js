@@ -2,6 +2,29 @@ import { useState, useEffect } from 'react';
 import Cards from './cards';
 import Scores from './scores';
 import { shuffle } from '../helpers';
+import styled from 'styled-components';
+
+const Button = styled.button`
+  width: 100%;
+  background: #faf3dd;
+  border: 0;
+  font-size: 2.5em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #0088cc;
+  box-shadow: 0 -2px 10px #333;
+  cursor: pointer;
+
+  &:focus {
+    outline-color: #0088cc;
+  }
+
+  &:hover {
+    background: #fcf9ed;
+    box-shadow: 0 -2px 15px #333;
+    color: #007ab8;
+  }
+`;
 
 function Game({ cards }) {
   const [score, setScore] = useState(null);
@@ -54,25 +77,24 @@ function Game({ cards }) {
 
   return (
     <div id="game">
+      {started ? (
+        <Button onClick={stopGame(false)}>Reset</Button>
+      ) : (
+        <Button onClick={startGame()}>Start game</Button>
+      )}
       <Scores
         score={score}
         highScore={highScore}
         started={started}
         gameEnd={gameEnd}
       />
-      {started ? (
-        <>
-          <button onClick={stopGame(false)}>Reset</button>
-          <Cards
-            cards={shuffle(cards)}
-            incrementScore={incrementScore}
-            selectCard={selectCard}
-          />
-        </>
-      ) : (
-        <>
-          <button onClick={startGame()}>Start game</button>
-        </>
+      {started && (
+        <Cards
+          className="container"
+          cards={shuffle(cards)}
+          incrementScore={incrementScore}
+          selectCard={selectCard}
+        />
       )}
     </div>
   );
