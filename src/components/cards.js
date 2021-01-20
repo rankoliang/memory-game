@@ -18,7 +18,6 @@ function Cards({ cards, incrementScore, selectCard, ...props }) {
         <Card
           img={card.img}
           caption={card.caption}
-          cardId={index}
           key={index}
           onClick={() => {
             selectCard(card);

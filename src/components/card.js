@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import 'react-aspect-ratio/aspect-ratio.css';
 import AspectRatio from 'react-aspect-ratio';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 const StyledCard = styled.button`
   background: white;
@@ -50,14 +50,16 @@ const StyledAspectRatio = styled(AspectRatio)`
   }
 `;
 
-function Card({ img: { src, alt }, caption, cardId, onClick }) {
+function Card({ img: { src, alt }, caption, onClick }) {
+  const cardEl = useRef(null);
+
   return (
     <StyledCard
-      data-card-id={cardId}
       onClick={onClick}
       aria-label={caption}
-      onMouseEnter={(e) => e.target.focus()}
-      onMouseLeave={(e) => e.target.blur()}
+      onMouseEnter={() => cardEl.current.focus()}
+      onMouseLeave={() => cardEl.current.blur()}
+      ref={cardEl}
     >
       <StyledAspectRatio ratio={1}>
         <img src={src} alt={alt} draggable="false" />
