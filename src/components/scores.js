@@ -1,15 +1,24 @@
-function Scores({ score, highScore, started, gameOver }) {
+function Scores({ score, highScore, started, gameEnd }) {
   let scoreElement = null;
 
   if (started) {
     scoreElement = <div id="score">Score: {score}</div>;
-  } else if (gameOver) {
-    scoreElement = (
-      <div id="score">
-        You picked {gameOver.card.caption} already! Your final score is:{' '}
-        {gameOver.score}
-      </div>
-    );
+  } else if (gameEnd) {
+    switch (gameEnd.state) {
+      case 'game over':
+        scoreElement = (
+          <div id="score">
+            You picked {gameEnd.card.caption} already! Your final score is:{' '}
+            {gameEnd.score}
+          </div>
+        );
+        break;
+      case 'win':
+        scoreElement = (
+          <div id="score">You win! Your final score is: {gameEnd.score}</div>
+        );
+        break;
+    }
   }
 
   return (

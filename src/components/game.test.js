@@ -106,18 +106,18 @@ describe('a started game', () => {
       });
     });
 
-    xit('wins the game', () => {
-      expect(screen.getByText('win')).toBeInTheDocument();
+    it('is won', () => {
+      expect(screen.getByText(/win/)).toBeInTheDocument();
     });
 
-    xit('does not render any card', () => {
+    it('does not render any card', () => {
       expect(
         cardCaptions.map((caption) => screen.queryByText(caption))
       ).not.toHaveAnyValue();
     });
 
-    xit('does not render a score', () => {
-      expect(screen.getByText(/^Score:/)).not.toBeInTheDocument();
+    it('does not render a score', () => {
+      expect(screen.queryByText(/^Score:/)).not.toBeInTheDocument();
     });
   });
 });

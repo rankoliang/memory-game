@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Cards from './cards';
 import Scores from './scores';
 
@@ -6,30 +6,30 @@ function Game({ cards }) {
   const [score, setScore] = useState(null);
   const [started, setStarted] = useState(false);
   const [highScore, setHighScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
+  const [gameEnd, setGameEnd] = useState(false);
   const [selectedCards, setSelectedCards] = useState(null);
 
   function startGame() {
     return () => {
       setStarted(true);
       setScore(0);
-      setGameOver(false);
+      setGameEnd(false);
       setSelectedCards(new Set());
     };
   }
 
-  function stopGame(gameOver = false) {
+  function stopGame(gameEndState = false) {
     return () => {
       setStarted(false);
       setScore(null);
-      setGameOver(gameOver);
+      setGameEnd(gameEndState);
       setSelectedCards(new Set());
     };
   }
 
   function selectCard(card) {
     if (selectedCards.has(card)) {
-      stopGame({ card, score })();
+      stopGame({ card, score, state: 'game over' })();
     } else {
       incrementScore();
       setSelectedCards(new Set([...selectedCards, card]));
@@ -44,6 +44,12 @@ function Game({ cards }) {
       setHighScore(newScore);
     }
   }
+
+  useEffect(() => {
+    if (started && selectedCards.size === cards.length) {
+      stopGame({ score: cards.length, state: 'win' })();
+    }
+  }, [selectedCards]);
 
   const contents = started ? (
     <>
@@ -66,7 +72,7 @@ function Game({ cards }) {
         score={score}
         highScore={highScore}
         started={started}
-        gameOver={gameOver}
+        gameEnd={gameEnd}
       />
       {contents}
     </div>
