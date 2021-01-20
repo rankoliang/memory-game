@@ -56,3 +56,19 @@ expect.extend({
     };
   },
 });
+
+expect.extend({
+  toHaveAnyValue(received) {
+    if (received.some((element) => element !== null && element !== undefined)) {
+      return {
+        message: () => 'Expected the collection to have no values',
+        pass: true,
+      };
+    } else {
+      return {
+        message: () => 'Expected the collection to have any values',
+        pass: false,
+      };
+    }
+  },
+});

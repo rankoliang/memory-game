@@ -68,13 +68,11 @@ describe('a started game', () => {
 
     describe('when the same card is picked', () => {
       let initialScore;
-      let initialHighScore;
 
       beforeEach(() => {
         userEvent.click(screen.getByText(cardCaptions[0]));
 
         initialScore = getScore('Score');
-        initialHighScore = getScore('High Score');
       });
 
       it('ends the game', () => {
@@ -98,6 +96,28 @@ describe('a started game', () => {
 
         expect(screen.getByRole('button', { name: 'Start game' }));
       });
+    });
+  });
+
+  describe('when every card is picked', () => {
+    beforeEach(() => {
+      cardCaptions.forEach((caption) => {
+        userEvent.click(screen.getByText(caption));
+      });
+    });
+
+    xit('wins the game', () => {
+      expect(screen.getByText('win')).toBeInTheDocument();
+    });
+
+    xit('does not render any card', () => {
+      expect(
+        cardCaptions.map((caption) => screen.queryByText(caption))
+      ).not.toHaveAnyValue();
+    });
+
+    xit('does not render a score', () => {
+      expect(screen.getByText(/^Score:/)).not.toBeInTheDocument();
     });
   });
 });
