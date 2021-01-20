@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import 'react-aspect-ratio/aspect-ratio.css';
 import AspectRatio from 'react-aspect-ratio';
+import { useEffect } from 'react';
 
 const StyledCard = styled.div`
   display: flex;
@@ -40,8 +41,17 @@ const StyledAspectRatio = styled(AspectRatio)`
 `;
 
 function Card({ img: { src, alt }, caption, cardId, onClick }) {
+  function handleEnter(event) {
+    if (event.key === 'Enter') event.target.click();
+  }
+
   return (
-    <StyledCard data-card-id={cardId} onClick={onClick}>
+    <StyledCard
+      data-card-id={cardId}
+      onClick={onClick}
+      tabIndex="0"
+      onKeyDown={handleEnter}
+    >
       <StyledAspectRatio ratio={1}>
         <img src={src} alt={alt} />
       </StyledAspectRatio>

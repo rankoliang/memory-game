@@ -12,6 +12,8 @@ function getScore(label) {
   return Number(score);
 }
 
+const cardCaptions = ENV['cards'].map((card) => card.caption);
+
 describe('a started game', () => {
   beforeEach(() => {
     render(<Game cards={ENV['cards']} />);
@@ -19,41 +21,47 @@ describe('a started game', () => {
     userEvent.click(startButton);
   });
 
+  it('focuses the reset button', () => {
+    expect(screen.getByRole('button', { name: 'Reset' })).toHaveFocus();
+  });
+
+  describe('when the user tabs', () => {
+    it('focuses each card in order', () => {
+      cardCaptions.forEach((caption) => {
+        userEvent.tab();
+
+        expect(document.activeElement).toHaveTextContent(caption);
+      });
+    });
+  });
+
   describe('when a card is picked', () => {
     it('increments the score by 1', () => {
-      const cardCaption = ENV['cards'][0].caption;
-
       expect(() =>
-        userEvent.click(screen.getByText(cardCaption))
+        userEvent.click(screen.getByText(cardCaptions[0]))
       ).toChange(() => getScore('Score'), { by: 1 });
     });
 
     it('increments the high score by 1', () => {
-      const cardCaption = ENV['cards'][0].caption;
-
       expect(() =>
-        userEvent.click(screen.getByText(cardCaption))
+        userEvent.click(screen.getByText(cardCaptions[0]))
       ).toChange(() => getScore('High Score'), { by: 1 });
     });
 
     describe('when another card is picked', () => {
       it('increments the score by 1', () => {
-        const cardCaption = ENV['cards'][1].caption;
-
-        userEvent.click(screen.getByText(cardCaption));
+        userEvent.click(screen.getByText(cardCaptions[0]));
 
         expect(() =>
-          userEvent.click(screen.getByText(cardCaption))
+          userEvent.click(screen.getByText(cardCaptions[1]))
         ).toChange(() => getScore('Score'), { by: 1 });
       });
 
       it('increments the high score by 1', () => {
-        const cardCaption = ENV['cards'][1].caption;
-
-        userEvent.click(screen.getByText(cardCaption));
+        userEvent.click(screen.getByText(cardCaptions[0]));
 
         expect(() =>
-          userEvent.click(screen.getByText(cardCaption))
+          userEvent.click(screen.getByText(cardCaptions[1]))
         ).toChange(() => getScore('High Score'), { by: 1 });
       });
     });
