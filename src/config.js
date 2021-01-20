@@ -36,7 +36,8 @@ export default {
     },
     {
       img: {
-        src: 'https://assets.stickpng.com/thumbs/58480979cef1014c0b5e4901.png',
+        src:
+          'https://lh3.googleusercontent.com/Nn-_IMiFyvY4omQ90_x7UNF2vF6f_-yIXHaeztzsb1-Sr9PckFsOQezjxtO0KZ6wyOaU',
         alt: 'Java logo',
       },
       caption: 'Java',

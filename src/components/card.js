@@ -3,7 +3,8 @@ import 'react-aspect-ratio/aspect-ratio.css';
 import AspectRatio from 'react-aspect-ratio';
 import { useEffect } from 'react';
 
-const StyledCard = styled.div`
+const StyledCard = styled.button`
+  background: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,17 +42,8 @@ const StyledAspectRatio = styled(AspectRatio)`
 `;
 
 function Card({ img: { src, alt }, caption, cardId, onClick }) {
-  function handleEnter(event) {
-    if (event.key === 'Enter') event.target.click();
-  }
-
   return (
-    <StyledCard
-      data-card-id={cardId}
-      onClick={onClick}
-      tabIndex="0"
-      onKeyDown={handleEnter}
-    >
+    <StyledCard data-card-id={cardId} onClick={onClick} aria-label={caption}>
       <StyledAspectRatio ratio={1}>
         <img src={src} alt={alt} />
       </StyledAspectRatio>
