@@ -1,6 +1,8 @@
 # Memory Game
 
-This game is built with React using functional components.
+This game is built with React using functional components and hooks.
+
+You can play it at https://rankoliang.github.io/memory-game
 
 ## Rules
 
